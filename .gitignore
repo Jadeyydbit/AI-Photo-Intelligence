@@ -1,0 +1,42 @@
+# Dependencies and environments
+frontend/node_modules/
+website/node_modules/
+backend/.venv/
+__pycache__/
+*.py[cod]
+
+# Frontend and Tauri build output
+frontend/dist/
+frontend/backend-dist/
+frontend/src-tauri/target/
+website/dist/
+*.exe
+*.dmg
+*.AppImage
+
+# Local AI and packaging output
+backend/build/
+backend/dist/
+backend/*.spec
+*.pt
+
+# Local application data
+backend/data/
+*.db
+*.sqlite
+*.sqlite3
+*.lock
+qdrant/
+
+# Local environment and editor files
+.env
+.env.*
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+.idea/
+Thumbs.db
+Desktop.ini
+
+# PowerShell-generated local cache
+Microsoft/

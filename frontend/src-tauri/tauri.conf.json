@@ -1,0 +1,55 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "AI Photo Intelligence",
+  "version": "0.1.0",
+  "identifier": "com.ai.photo.intelligence",
+
+  "build": {
+    "beforeDevCommand": "npm run dev -- --host 0.0.0.0 --port 4173",
+    "beforeBuildCommand": "npm run build:backend && npm run build",
+    "devUrl": "http://localhost:4173",
+    "frontendDist": "../dist"
+  },
+
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "AI Photo Intelligence",
+        "width": 1400,
+        "height": 900,
+        "minWidth": 1100,
+        "minHeight": 700,
+        "resizable": true,
+        "fullscreen": false,
+        "dragDropEnabled": true
+      }
+    ],
+
+    "security": {
+      "csp": null,
+
+      "assetProtocol": {
+        "enable": true,
+        "scope": [
+          "**"
+        ]
+      }
+    }
+  },
+
+  "bundle": {
+    "active": true,
+    "resources": {
+      "../backend-dist/ai-photo-backend.exe": "backend-dist/ai-photo-backend.exe"
+    },
+    "targets": [
+      "nsis"
+    ],
+    "windows": {
+      "nsis": {
+        "installMode": "perMachine"
+      }
+    }
+  }
+}

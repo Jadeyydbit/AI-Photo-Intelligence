@@ -1,0 +1,12 @@
+torch
+torchvision
+transformers
+Pillow
+numpy
+opencv-python
+pytesseract
+fastapi
+uvicorn
+pydantic
+qdrant-client
+ultralytics
