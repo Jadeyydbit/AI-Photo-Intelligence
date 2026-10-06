@@ -34,7 +34,16 @@ Open the URL printed by Vite, usually:
 ```text
 http://localhost:5173
 ```
-
+## For the website
+```powershell
+cd "C:\Users\Jaden\Desktop\AI-Photo-Intelligence -2\website"
+npm install
+npm run dev
+```
+Vite will display a local URL, usually:
+```text
+http://localhost:5173
+```
 ## Optional backend activation
 
 Instead of using the direct Python executable command, activate the backend
