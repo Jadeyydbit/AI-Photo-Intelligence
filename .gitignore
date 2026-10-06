@@ -40,3 +40,6 @@ Desktop.ini
 
 # PowerShell-generated local cache
 Microsoft/
+
+# Private release instructions
+update.md

@@ -326,6 +326,36 @@ img {
     background 0.25s ease;
 }
 
+.app-update-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0 0 16px;
+  padding: 11px 14px;
+  border: 1px solid rgba(47, 133, 255, 0.35);
+  border-radius: 11px;
+  background: rgba(47, 133, 255, 0.1);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.app-update-banner button {
+  flex-shrink: 0;
+  padding: 7px 11px;
+  border: 1px solid rgba(47, 133, 255, 0.5);
+  border-radius: 8px;
+  background: rgba(47, 133, 255, 0.2);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.app-update-banner button:hover {
+  background: rgba(47, 133, 255, 0.32);
+}
+
 /* =========================================================
    TOPBAR
 ========================================================= */

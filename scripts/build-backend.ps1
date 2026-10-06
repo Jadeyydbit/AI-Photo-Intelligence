@@ -25,6 +25,7 @@ if (Test-Path $dist) {
     --noconfirm `
     --clean `
     --onefile `
+    --windowed `
     --name ai-photo-backend `
     --distpath $dist `
     --workpath $work `

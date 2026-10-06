@@ -6,7 +6,7 @@ export type DownloadConfig = {
   url: string;
 };
 
-export const APP_VERSION = "0.1.0";
+export const APP_VERSION = "0.1.2";
 
 /*
  * Replace these paths with the final GitHub Release, R2, S3, or other
@@ -17,7 +17,7 @@ export const DOWNLOADS: Record<Platform, DownloadConfig> = {
   windows: {
     label: "Windows",
     fileName: "AI-Photo-Intelligence-Setup.exe",
-    url: "/downloads/windows/AI-Photo-Intelligence-Setup.exe",
+    url: "https://github.com/Jadeyydbit/AI-Photo-Intelligence/releases/download/v0.1.1/AI%20Photo%20Intelligence_0.1.1_x64-setup.exe",
   },
   macos: {
     label: "macOS",

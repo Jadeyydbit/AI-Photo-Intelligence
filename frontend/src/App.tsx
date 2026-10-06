@@ -21,6 +21,7 @@ import {
   Car,
   FolderPlus,
 } from "lucide-react";
+import { openUrl } from "@tauri-apps/plugin-opener";
 
 import {
   Sidebar,
@@ -162,6 +163,15 @@ export type DuplicateResponse = {
 
 const AI_API_URL =
   "http://127.0.0.1:8000";
+
+const APP_VERSION =
+  "0.1.1";
+
+const RELEASES_API_URL =
+  "https://api.github.com/repos/Jadeyydbit/AI-Photo-Intelligence/releases/latest";
+
+const DOWNLOAD_WEBSITE_URL =
+  "https://github.com/Jadeyydbit/AI-Photo-Intelligence/releases/latest";
 
 /* =========================================================
    STORAGE
@@ -1433,6 +1443,16 @@ function App(): ReactElement {
   ] = useState<string | null>(null);
 
   const [
+    availableUpdateVersion,
+    setAvailableUpdateVersion,
+  ] = useState<string | null>(null);
+
+  const [
+    isCheckingForUpdates,
+    setIsCheckingForUpdates,
+  ] = useState(false);
+
+  const [
     favoritePaths,
     setFavoritePaths,
   ] = useState<Set<string>>(
@@ -1451,6 +1471,88 @@ function App(): ReactElement {
     useRef<string | null>(
       null,
     );
+
+  const checkForUpdates = async (): Promise<void> => {
+      setIsCheckingForUpdates(true);
+
+      try {
+        const response = await fetch(
+          RELEASES_API_URL,
+          {
+            headers: {
+              Accept: "application/vnd.github+json",
+            },
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Release service returned ${response.status}.`,
+          );
+        }
+
+        const release = (await response.json()) as {
+          tag_name?: unknown;
+        };
+
+        const latestVersion =
+          typeof release.tag_name === "string"
+            ? release.tag_name.replace(/^v/, "")
+            : null;
+
+        if (!latestVersion) {
+          throw new Error(
+            "The latest release did not include a version.",
+          );
+        }
+
+        const hasUpdate =
+          latestVersion !== APP_VERSION;
+        setAvailableUpdateVersion(
+          hasUpdate
+            ? latestVersion
+            : null,
+        );
+        setSettingsNotice(
+          hasUpdate
+            ? `Version ${latestVersion} is available.`
+            : "You are using the latest version.",
+        );
+      } catch (error) {
+        setSettingsNotice(
+          `Unable to check for updates: ${
+            error instanceof Error
+              ? error.message
+              : "Update service is unavailable."
+          }`,
+        );
+      } finally {
+        setIsCheckingForUpdates(false);
+      }
+  };
+
+  const openUpdateDownload = async (): Promise<void> => {
+    try {
+      await openUrl(
+        DOWNLOAD_WEBSITE_URL,
+      );
+      setSettingsNotice(
+        "The latest installer opened. Close this app, then run the installer to update it.",
+      );
+    } catch (error) {
+      setSettingsNotice(
+        `Unable to open the update page: ${
+          error instanceof Error
+            ? error.message
+            : "The update page could not be opened."
+        }`,
+      );
+    }
+  };
+
+  useEffect(() => {
+    void checkForUpdates();
+  }, []);
 
   /* =======================================================
      CLASSIFICATION CACHE VERSION
@@ -3367,7 +3469,9 @@ function App(): ReactElement {
                           Local photo organization and discovery.
                         </div>
                       </div>
-                      <span className="setting-pill">Version 0.1.0</span>
+                      <span className="setting-pill">
+                        Version {APP_VERSION}
+                      </span>
                     </div>
                     <div className="setting-row">
                       <div>
@@ -3377,6 +3481,36 @@ function App(): ReactElement {
                         </div>
                       </div>
                       <span className="setting-pill">Local mode</span>
+                    </div>
+                    <div className="setting-row settings-action-row">
+                      <div>
+                        <div className="setting-label">Application updates</div>
+                        <div className="setting-help">
+                          Check for a newer desktop app and bundled backend.
+                        </div>
+                      </div>
+                      {availableUpdateVersion ? (
+                        <button
+                          type="button"
+                          className="settings-action-button"
+                          onClick={() => {
+                            void openUpdateDownload();
+                          }}
+                        >
+                          Download update
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="settings-action-button"
+                          onClick={checkForUpdates}
+                          disabled={isCheckingForUpdates}
+                        >
+                          {isCheckingForUpdates
+                            ? "Checking..."
+                            : "Check for updates"}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -3565,6 +3699,22 @@ function App(): ReactElement {
             )}
 
         </header>
+
+        {availableUpdateVersion && (
+          <div className="app-update-banner" role="status">
+            <span>
+              AI Photo Intelligence {availableUpdateVersion} is available.
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                void openUpdateDownload();
+              }}
+            >
+              Download update
+            </button>
+          </div>
+        )}
 
         {renderView()}
       </main>
