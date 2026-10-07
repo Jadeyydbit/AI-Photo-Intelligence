@@ -17,7 +17,7 @@ export const DOWNLOADS: Record<Platform, DownloadConfig> = {
   windows: {
     label: "Windows",
     fileName: "AI-Photo-Intelligence-Setup.exe",
-    url: "https://github.com/Jadeyydbit/AI-Photo-Intelligence/releases/download/v0.1.1/AI%20Photo%20Intelligence_0.1.1_x64-setup.exe",
+    url: "https://github.com/Jadeyydbit/AI-Photo-Intelligence/releases/download/v0.1.1/AI.Photo.Intelligence_0.1.1_x64-setup.exe",
   },
   macos: {
     label: "macOS",
