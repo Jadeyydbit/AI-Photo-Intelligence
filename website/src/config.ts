@@ -6,7 +6,7 @@ export type DownloadConfig = {
   url: string;
 };
 
-export const APP_VERSION = "0.1.2";
+export const APP_VERSION = "0.1.1";
 
 /*
  * Replace these paths with the final GitHub Release, R2, S3, or other
